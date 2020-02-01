@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.SAlvesjr.cursomc.domain.Categoria;
-import com.SAlvesjr.cursomc.service.CategoriaService;
+import com.SAlvesjr.cursomc.services.CategoriaService;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -33,7 +33,7 @@ public class CategoriaResource {
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Categoria> find(@PathVariable Long id) {
 		Categoria obj = categoria.findById(id);
-		return ResponseEntity.ok(obj);
+		return ResponseEntity.ok().body(obj);
 	}
 
 }
