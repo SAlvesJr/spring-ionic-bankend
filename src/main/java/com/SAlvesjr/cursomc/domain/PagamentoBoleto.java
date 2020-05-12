@@ -6,13 +6,17 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.SAlvesjr.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "tb_pagamento_boleto")
 public class PagamentoBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dataVencimento;
+
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date dataPagamento;
 
 	public PagamentoBoleto() {
