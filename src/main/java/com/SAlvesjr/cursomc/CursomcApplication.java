@@ -3,7 +3,6 @@ package com.SAlvesjr.cursomc;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,6 +13,7 @@ import com.SAlvesjr.cursomc.domain.Cidade;
 import com.SAlvesjr.cursomc.domain.Cliente;
 import com.SAlvesjr.cursomc.domain.Endereco;
 import com.SAlvesjr.cursomc.domain.Estado;
+import com.SAlvesjr.cursomc.domain.ItemPedido;
 import com.SAlvesjr.cursomc.domain.Pagamento;
 import com.SAlvesjr.cursomc.domain.PagamentoBoleto;
 import com.SAlvesjr.cursomc.domain.PagamentoCartao;
@@ -26,6 +26,7 @@ import com.SAlvesjr.cursomc.repositories.CidadeRepository;
 import com.SAlvesjr.cursomc.repositories.ClienteRepository;
 import com.SAlvesjr.cursomc.repositories.EnderecoRepository;
 import com.SAlvesjr.cursomc.repositories.EstadoRepository;
+import com.SAlvesjr.cursomc.repositories.ItemPedidoRepository;
 import com.SAlvesjr.cursomc.repositories.PagamentoRepository;
 import com.SAlvesjr.cursomc.repositories.PedidoRepository;
 import com.SAlvesjr.cursomc.repositories.ProdutoRepository;
@@ -56,6 +57,9 @@ public class CursomcApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -107,7 +111,7 @@ public class CursomcApplication implements CommandLineRunner {
 
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		Pedido ped1 = new Pedido(null, sdf.parse("30/90/2017 10:32"), cl1, e1);
 		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2017 19:35"), cl1, e2);
@@ -122,6 +126,19 @@ public class CursomcApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pag1, pag2));
+		
+		ItemPedido it1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido it2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido it3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(it1, it3));
+		ped2.getItens().addAll(Arrays.asList(it3));
+		
+		p1.getItens().addAll(Arrays.asList(it1));
+		p2.getItens().addAll(Arrays.asList(it3));
+		p3.getItens().addAll(Arrays.asList(it2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(it1, it2, it3));
 	}
 
 }
