@@ -34,8 +34,13 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria cat) {
-		findById(cat.getId());
+		Categoria newCat = findById(cat.getId());
+		updateData(newCat, cat);
 		return categoriaRepository.save(cat);
+	}
+
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 
 	public void delete(Long id) {
@@ -50,12 +55,12 @@ public class CategoriaService {
 	public List<Categoria> findAll() {
 		return categoriaRepository.findAll();
 	}
-	
+
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return categoriaRepository.findAll(pageRequest);
 	}
-	
+
 	public Categoria fromDTO(CategoriaDTO obj) {
 		return new Categoria(obj.getId(), obj.getNome());
 	}
