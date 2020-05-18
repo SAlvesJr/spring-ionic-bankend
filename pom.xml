@@ -9,8 +9,8 @@
 		<version>2.2.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.SAlvesJr.cursomc</groupId>
-	<artifactId>cursomc</artifactId>
+	<groupId>com.SAlvesJr.cursomcback</groupId>
+	<artifactId>cursomcback</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>cursomc</name>
 	<description>project Spring Boot</description>
