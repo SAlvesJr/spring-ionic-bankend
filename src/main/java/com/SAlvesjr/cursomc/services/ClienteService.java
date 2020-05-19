@@ -76,7 +76,7 @@ public class ClienteService {
 	}
 
 	public Cliente fromDTO(ClienteDTO obj, Long id) {
-		return new Cliente(obj.getId(), obj.getName(), obj.getEmail(), null, null);
+		return new Cliente(id, obj.getNome(), obj.getEmail(), null, null);
 	}
 
 	public Cliente fromDTO(@Valid ClienteNewDTO objDTO) {

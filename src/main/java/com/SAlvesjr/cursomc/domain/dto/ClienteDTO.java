@@ -8,7 +8,9 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.SAlvesjr.cursomc.domain.Cliente;
+import com.SAlvesjr.cursomc.services.validation.ClienteUpdate;
 
+@ClienteUpdate
 public class ClienteDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -17,7 +19,7 @@ public class ClienteDTO implements Serializable {
 	
 	@NotEmpty(message="Preenchimento obrigatório")
 	@Length(min = 5, max = 120, message = "o tamanho deve ter de 5 a 120 caracteries")
-	private String name;
+	private String nome;
 	@NotEmpty(message="Preenchimento obrigatório")
 	@Email(message = "email invalido")
 	private String email;
@@ -28,7 +30,7 @@ public class ClienteDTO implements Serializable {
 
 	public ClienteDTO(Cliente obj) {
 		this.id = obj.getId();
-		this.name = obj.getNome();
+		this.nome = obj.getNome();
 		this.email = obj.getEmail();
 	}
 
@@ -40,12 +42,12 @@ public class ClienteDTO implements Serializable {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNome(String name) {
+		this.nome = name;
 	}
 
 	public String getEmail() {
