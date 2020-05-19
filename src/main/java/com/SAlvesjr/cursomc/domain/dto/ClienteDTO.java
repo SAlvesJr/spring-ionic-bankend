@@ -15,10 +15,10 @@ public class ClienteDTO implements Serializable {
 
 	private Long id;
 	
-	@NotEmpty(message = "o campo não pode ser nulo")
+	@NotEmpty(message="Preenchimento obrigatório")
 	@Length(min = 5, max = 120, message = "o tamanho deve ter de 5 a 120 caracteries")
 	private String name;
-	@NotEmpty(message = "o campo não pode ser nulo")
+	@NotEmpty(message="Preenchimento obrigatório")
 	@Email(message = "email invalido")
 	private String email;
 

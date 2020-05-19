@@ -7,29 +7,41 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.SAlvesjr.cursomc.domain.Cliente;
-import com.SAlvesjr.cursomc.domain.Endereco;
+import com.SAlvesjr.cursomc.services.validation.ClienteInsert;
 
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@NotEmpty(message = "o campo não pode ser nulo")
+	@NotEmpty(message="Preenchimento obrigatório")
 	@Length(min = 5, max = 120, message = "o tamanho deve ter de 5 a 120 caracteries")
 	private String nome;
-	@NotEmpty(message = "o campo não pode ser nulo")
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	@Email(message = "email invalido")
 	private String email;
-	private String cpfCNPJ;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
+	private String cpfOuCnpj;
+	
 	private Integer tipo;
 
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String logradouro;
+	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String numero;
+	
 	private String complemento;
 	private String bairro;
+	
+	@NotEmpty(message = "o campo não pode ser nulo")
 	private String cep;
-
+	
+	@NotEmpty(message = "o campo não pode ser nulo")
 	private String telefone_1;
+	
 	private String telefone_2;
 	private String telefone_3;
 
@@ -37,23 +49,6 @@ public class ClienteNewDTO implements Serializable {
 
 	public ClienteNewDTO() {
 
-	}
-
-	public ClienteNewDTO(Cliente cliente, Endereco endereco, String telefone_1, String telefone_2, String telefone_3,
-			Long cidadeId) {
-		this.nome = cliente.getNome();
-		this.email = cliente.getEmail();
-		this.cpfCNPJ = cliente.getCpfCNPJ();
-		this.tipo = cliente.getTipo().getCod();
-		this.logradouro = endereco.getLogradouro();
-		this.numero = endereco.getNumero();
-		this.complemento = endereco.getComplemento();
-		this.bairro = endereco.getBairro();
-		this.cep = endereco.getCep();
-		this.telefone_1 = telefone_1;
-		this.telefone_2 = telefone_2;
-		this.telefone_3 = telefone_3;
-		this.cidadeId = cidadeId;
 	}
 
 	public String getNome() {
@@ -72,12 +67,12 @@ public class ClienteNewDTO implements Serializable {
 		this.email = email;
 	}
 
-	public String getCpfCNPJ() {
-		return cpfCNPJ;
+	public String getCpfOuCnpj() {
+		return cpfOuCnpj;
 	}
 
-	public void setCpfCNPJ(String cpfCNPJ) {
-		this.cpfCNPJ = cpfCNPJ;
+	public void setCpfOuCnpj(String cpfOuCnpj) {
+		this.cpfOuCnpj = cpfOuCnpj;
 	}
 
 	public Integer getTipo() {
