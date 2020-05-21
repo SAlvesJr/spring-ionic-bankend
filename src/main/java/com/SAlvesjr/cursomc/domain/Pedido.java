@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "tg_pedido")
+@Table(name = "tb_pedido")
 public class Pedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 

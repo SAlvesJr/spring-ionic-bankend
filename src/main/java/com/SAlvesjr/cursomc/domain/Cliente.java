@@ -21,7 +21,7 @@ import com.SAlvesjr.cursomc.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "tg_cliente")
+@Table(name = "tb_cliente")
 public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -35,11 +35,14 @@ public class Cliente implements Serializable {
 	private String cpfOuCnpj;
 	private Integer tipo;
 
+	@JsonIgnore
+	private String senha;
+
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 
 	@ElementCollection
-	@CollectionTable(name = "telefone")
+	@CollectionTable(name = "tb_telefone")
 	private Set<String> telefones = new HashSet<>();
 
 	@JsonIgnore
@@ -50,13 +53,14 @@ public class Cliente implements Serializable {
 
 	}
 
-	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo) {
+	public Cliente(Long id, String nome, String email, String cpfOuCnpj, TipoCliente tipo, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
 		this.tipo = tipo != null ? tipo.getCod() : null;
+		this.senha = senha;
 	}
 
 	public Long getId() {
@@ -97,6 +101,14 @@ public class Cliente implements Serializable {
 
 	public void setTipo(TipoCliente tipo) {
 		this.tipo = tipo.getCod();
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 	public List<Endereco> getEnderecos() {
