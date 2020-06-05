@@ -1,16 +1,17 @@
 package com.SAlvesjr.cursomc.services;
 
-import java.io.File;
+import java.io.InputStream;
+import java.net.URI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 
 @Service
 public class S3Service {
@@ -23,18 +24,28 @@ public class S3Service {
 	@Value("${s3.bucket}")
 	private String bucketName;
 
-	public void uploadFile(String localFilePaht) {
+	public URI uploadFile(MultipartFile multipartFile) {
 		try {
-			File file = new File(localFilePaht);
-			s3service.putObject(bucketName, "teste.jpg", file);
-			LOOGER.info("upload completo");
-		} catch (AmazonServiceException e) {
-			LOOGER.info("AmazonServiceException " + e.getErrorMessage());
-			LOOGER.info("Status code " + e.getErrorCode());
-		} catch (AmazonClientException e) {
-			LOOGER.info("AmazonClientException " + e.getMessage());
+			String fileName = multipartFile.getOriginalFilename();
+			InputStream is = multipartFile.getInputStream();
+			String contentType = multipartFile.getContentType();
+			return uploadFile(is, fileName, contentType);
+		} catch (Exception e) {
+			throw new RuntimeException("Erro de IO " + e.getMessage());
 		}
 
+	}
+
+	private URI uploadFile(InputStream is, String fileName, String contentType) {
+		try {
+			ObjectMetadata metadata = new ObjectMetadata();
+			metadata.setContentType(contentType);
+			s3service.putObject(bucketName, fileName, is, metadata);
+			LOOGER.info("upload completo");
+			return s3service.getUrl(bucketName, fileName).toURI();
+		} catch (Exception e) {
+			throw new RuntimeException("Erro ao converter URL para URI");
+		}
 	}
 
 }
