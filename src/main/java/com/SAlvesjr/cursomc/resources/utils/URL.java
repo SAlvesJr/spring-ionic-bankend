@@ -8,6 +8,9 @@ import java.util.List;
 public class URL {
 
 	public static List<Long> decodeLongList(String s) {
+		if(s.isEmpty()) {
+			return new ArrayList<Long>();
+		}
 		String[] vet = s.split(",");
 		List<Long> list = new ArrayList<>();
 		for (String string : vet) {
