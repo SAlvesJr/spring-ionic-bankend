@@ -23,6 +23,7 @@ import com.SAlvesjr.cursomc.domain.Cliente;
 import com.SAlvesjr.cursomc.domain.Endereco;
 import com.SAlvesjr.cursomc.domain.dto.ClienteDTO;
 import com.SAlvesjr.cursomc.domain.dto.ClienteNewDTO;
+import com.SAlvesjr.cursomc.domain.enums.Perfil;
 import com.SAlvesjr.cursomc.domain.enums.TipoCliente;
 import com.SAlvesjr.cursomc.repositories.ClienteRepository;
 import com.SAlvesjr.cursomc.repositories.EnderecoRepository;
@@ -90,6 +91,20 @@ public class ClienteService {
 
 	public List<Cliente> findAll() {
 		return clienteRepository.findAll();
+	}
+
+	public Cliente findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+
+		Cliente cli = clienteRepository.findByEmail(email);
+		if (cli == null) {
+			throw new ObjectNotFoundException(
+					"Objeto não encontrado, Id: " + user.getId() + " Tipo: " + Cliente.class.getName());
+		}
+		return cli;
 	}
 
 	public Page<Cliente> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {

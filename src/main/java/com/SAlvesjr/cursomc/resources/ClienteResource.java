@@ -48,6 +48,16 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
+	@GetMapping(value = "/email")
+	public ResponseEntity<Cliente> findByEmail(@RequestParam(value="value") String email) {
+		UserSS user = UserService.authenticated();
+		if (user == null || !user.hasRole(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		Cliente obj = clienteService.findByEmail(email);
+		return ResponseEntity.ok().body(obj);
+	}
+
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> findCategoria() {
 		List<Cliente> cat = clienteService.findAll();
