@@ -18,7 +18,7 @@ import com.SAlvesjr.cursomc.services.validation.utils.BR;
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
 
 	@Autowired
-	private ClienteRepository clienteRepository;	
+	private ClienteRepository clienteRepository;
 	
 	@Override
 	public void initialize(ClienteInsert ann) {
